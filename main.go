@@ -5,13 +5,14 @@ import (
 	"os"
   "log"
   "encoding/json"
-  "github.com/spf13/cobra"
 )
+
+//import "github.com/spf13/cobra" later
 
 const datafile = "todo.json"
 
 func loadTask() []string {
-  tasks := []string
+  tasks := []string{}
   data, err := os.ReadFile(datafile)
   if err == nil {
     json.Unmarshal(data, &tasks)
