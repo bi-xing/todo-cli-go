@@ -7,6 +7,7 @@ import (
 	"os"
 )
 
+//test comment
 //import "github.com/spf13/cobra" later
 
 const datafile = "todo.json"
