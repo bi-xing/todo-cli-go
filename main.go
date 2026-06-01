@@ -1,10 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"log"
 	"os"
-  "log"
-  "encoding/json"
 )
 
 //import "github.com/spf13/cobra" later
@@ -12,37 +12,37 @@ import (
 const datafile = "todo.json"
 
 func loadTask() []string {
-  tasks := []string{}
-  data, err := os.ReadFile(datafile)
-  if err == nil {
-    json.Unmarshal(data, &tasks)
-  }
-  if err != nil {
-    fmt.Println("No tasks listed.")
-  }
-  return tasks
+	tasks := []string{}
+	data, err := os.ReadFile(datafile)
+	if err == nil {
+		json.Unmarshal(data, &tasks)
+	}
+	if err != nil {
+		fmt.Println("No tasks listed.")
+	}
+	return tasks
 }
 
 func saveTask(tasks []string) {
-  data, err := json.MarshalIndent(tasks, "", "\t")
-  if err != nil {
-    log.Fatalf("Error: %v", err)
-  }
-  os.WriteFile(datafile, data, 0644)
+	data, err := json.MarshalIndent(tasks, "", "\t")
+	if err != nil {
+		log.Fatalf("Error: %v", err)
+	}
+	os.WriteFile(datafile, data, 0644)
 }
 
 func main() {
-  art := `
-_________  ________  ________   ________          ______   ___       ___ 
+	start := `
+_________  ________  ________   ________          ______   ___       ___
 |___   ___||   __   ||  ___   \ |   __   |        /  ____| |   |     |_ _|
-    |  |   |  |  |  ||  |   \  ||  |  |  | _____ |  |      |   |      | | 
-    |  |   |  |  |  ||  |   |  ||  |  |  ||_____||  |      |   |      | | 
-    |  |   |  |__|  ||  |___/  ||  |__|  |       |  |____  |   |___   | | 
+    |  |   |  |  |  ||  |   \  ||  |  |  | _____ |  |      |   |      | |
+    |  |   |  |  |  ||  |   |  ||  |  |  ||_____||  |      |   |      | |
+    |  |   |  |__|  ||  |___/  ||  |__|  |       |  |____  |   |___   | |
     |__|   \________/|________/ \________/        \______| |_______| |___| written with Go
 
 ===========================================================================================
 ===========================================================================================
-    
+
 
 ⢀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⡟⠀⠀⣠⡟⠉⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡿⠀⣼⢁⡞⠉⠙⢮⣻⣿⣷⡀⠀⠀⠀⠀⠀⠀⠀⢹⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘
 ⢸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⠃⠀⣴⠏⠀⣠⡄⠀⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⡇⢰⣯⡎⠀⠀⠀⠀⠙⢿⣿⡿⣦⠀⠀⠀⠀⠀⠀⢸⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -82,5 +82,5 @@ _________  ________  ________   ________          ______   ___       ___
 ===========================================================================================
 
 `
-  fmt.Print(art)
+	fmt.Print(start)
 }
