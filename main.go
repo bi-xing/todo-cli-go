@@ -61,7 +61,7 @@ var saveCmd = &cobra.Command{
 }
 
 var rootCmd = &cobra.Command{
-	Use:   "Todo-CLI",
+	Use:   "todo",
 	Short: "A todo-CLI in Go.",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		cmd.Help()
