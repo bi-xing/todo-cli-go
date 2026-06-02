@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/charmbracelet/huh"
 	"github.com/spf13/cobra"
 )
 
@@ -45,15 +46,30 @@ var listCmd = &cobra.Command{
 }
 
 var addCmd = &cobra.Command{
-	Use:   "save",
-	Short: "Save current tasks and overwrite.",
+	Use:   "add [task]",
+	Short: "Add a new task.",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		newTask := args[0]
+		var task string
+		if len(args) > 0 {
+			task = args[0]
+		} else {
+			form := huh.NewForm(
+				huh.NewGroup(
+					huh.NewInput().Title("New Task").Description("What do you want to add?").Value(&task),
+				),
+			)
+			if err := form.Run(); err != nil {
+				log.Fatalf("Error: %v\n", err)
+			}
+			if task == "" {
+				return fmt.Errorf("task cannot be empty")
+			}
+		}
 		tasks := listTask()
-		tasks = append(tasks, newTask)
+		tasks = append(tasks, task)
 		saveTask(tasks)
-		fmt.Printf("Task added: %s\n", newTask)
+		fmt.Printf("Task added: %s\n", task)
 		return nil
 	},
 }
