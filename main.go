@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+
+	"github.com/spf13/cobra"
 )
 
 //test comment
@@ -12,14 +14,11 @@ import (
 
 const datafile = "todo.json"
 
-func loadTask() []string {
+func listTask() []string {
 	tasks := []string{}
 	data, err := os.ReadFile(datafile)
 	if err == nil {
 		json.Unmarshal(data, &tasks)
-	}
-	if err != nil {
-		fmt.Println("No tasks listed.")
 	}
 	return tasks
 }
@@ -30,6 +29,49 @@ func saveTask(tasks []string) {
 		log.Fatalf("Error: %v", err)
 	}
 	os.WriteFile(datafile, data, 0644)
+}
+
+var listCmd = &cobra.Command{
+	Use:   "list",
+	Short: "List all tasks currently.",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		tasks := listTask()
+		if len(tasks) == 0 {
+			fmt.Println("No tasks listed.")
+			return nil
+		}
+		for i, task := range tasks {
+			fmt.Printf("%d. %s\n", i+1, task)
+		}
+		return nil
+	},
+}
+
+var saveCmd = &cobra.Command{
+	Use:   "save",
+	Short: "Save current tasks and overwrite.",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		newTask := args[0]
+		tasks := listTask()
+		tasks = append(tasks, newTask)
+		saveTask(tasks)
+		fmt.Printf("Task added: %s\n", newTask)
+		return nil
+	},
+}
+
+var rootCmd = &cobra.Command{
+	Use:   "Todo-CLI",
+	Short: "A todo-CLI in Go.",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		cmd.Help()
+		return nil
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(listCmd)
+	rootCmd.AddCommand(saveCmd)
 }
 
 func main() {
@@ -84,4 +126,7 @@ _________  ________  ________   ________          ______   ___       ___
 
 `
 	fmt.Print(start)
+	if err := rootCmd.Execute(); err != nil {
+		log.Fatalf("Error: %v", err)
+	}
 }
