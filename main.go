@@ -9,9 +9,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-//test comment
-//import "github.com/spf13/cobra" later
-
 const datafile = "todo.json"
 
 func listTask() []string {
