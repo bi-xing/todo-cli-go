@@ -44,9 +44,10 @@ var listCmd = &cobra.Command{
 	},
 }
 
-var saveCmd = &cobra.Command{
+var addCmd = &cobra.Command{
 	Use:   "save",
 	Short: "Save current tasks and overwrite.",
+	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		newTask := args[0]
 		tasks := listTask()
@@ -68,7 +69,7 @@ var rootCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(listCmd)
-	rootCmd.AddCommand(saveCmd)
+	rootCmd.AddCommand(addCmd)
 }
 
 func main() {
