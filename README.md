@@ -1,5 +1,11 @@
 # todo-cli-go
 
+# MIRROR
+For issues and pull requests, please visit the main repository.
+Main Repository: https://codeberg.org/bixing/todo-cli-go
+
+___
+
 A minimal to-do list CLI written in Go. Manage tasks from your terminal with plain JSON persistence.
 
 ## Usage
