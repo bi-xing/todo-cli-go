@@ -2,7 +2,8 @@
 
 # MIRROR
 For issues and pull requests, please visit the main repository.
-Main Repository: https://codeberg.org/bixing/todo-cli-go
+
+https://codeberg.org/bixing/todo-cli-go
 
 ___
 
